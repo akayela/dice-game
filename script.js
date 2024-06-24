@@ -14,15 +14,44 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-//Starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
+// Declaring global variables
+let activePlayer, currentScore, playing, scores;
 
-let scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+//Starting conditions
+const init = function () {
+  // Set each player's global score back to 0
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+
+  // Set each player's current score back to 0
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  // Remove winner class from both players
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+
+  // Set the white background back on player 1 aka 0
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+
+  // Setting play to true
+  playing = true;
+
+  // Current player must be player 1 aka 0
+  activePlayer = 0;
+
+  // Set game score values for each player back to 0
+  scores = [0, 0];
+
+  // Hide the dice
+  diceEl.classList.add('hidden');
+
+  // Set the dice value to 0
+  currentScore = 0;
+};
+
+init();
 
 const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -85,35 +114,4 @@ btnHold.addEventListener('click', function () {
 });
 
 // Resetting the game
-btnNew.addEventListener('click', function () {
-  // Setting play to true
-  let playing = true;
-
-  // Current player must be player 1 aka 0
-  activePlayer = 0;
-
-  // Set game score values for each player back to 0
-  scores = [0, 0];
-
-  // Hide the dice
-  diceEl.classList.add('hidden');
-
-  // Set the dice value to 0
-  currentScore = 0;
-
-  // Set each player's global score back to 0
-  score0El.textContent = 0;
-  score1El.textContent = 0;
-
-  // Set each player's current score back to 0
-  current0El.textContent = 0;
-  current1El.textContent = 0;
-
-  // Set the white background back on player 1 aka 0
-  player0El.classList.add('player--active');
-  player1El.classList.remove('player--active');
-
-  // Remove winner class from both players
-  player0El.classList.remove('player--winner');
-  player1El.classList.remove('player--winner');
-});
+btnNew.addEventListener('click', init);
