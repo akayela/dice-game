@@ -1,8 +1,8 @@
 'use strict';
 
 //Selecting elements
-const palyer0El = document.querySelector('.player--0');
-const palyer1El = document.querySelector('.player--1');
+const player0El = document.querySelector('.player--0');
+const player1El = document.querySelector('.player--1');
 
 const score0El = document.getElementById('score--0');
 const score1El = document.getElementById('score--1');
@@ -19,7 +19,7 @@ score0El.textContent = 0;
 score1El.textContent = 0;
 diceEl.classList.add('hidden');
 
-const scores = [0, 0];
+let scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
 let playing = true;
@@ -28,8 +28,8 @@ const switchPlayer = function () {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
   currentScore = 0;
   activePlayer = activePlayer === 0 ? 1 : 0;
-  palyer0El.classList.toggle('player--active');
-  palyer1El.classList.toggle('player--active');
+  player0El.classList.toggle('player--active');
+  player1El.classList.toggle('player--active');
 };
 
 //Rolling the dice
@@ -57,6 +57,7 @@ btnRoll.addEventListener('click', function () {
   }
 });
 
+// Holding the score and finishing the game
 btnHold.addEventListener('click', function () {
   if (playing) {
     // Add current score to active player score
@@ -81,4 +82,38 @@ btnHold.addEventListener('click', function () {
       switchPlayer();
     }
   }
+});
+
+// Resetting the game
+btnNew.addEventListener('click', function () {
+  // Setting play to true
+  let playing = true;
+
+  // Current player must be player 1 aka 0
+  activePlayer = 0;
+
+  // Set game score values for each player back to 0
+  scores = [0, 0];
+
+  // Hide the dice
+  diceEl.classList.add('hidden');
+
+  // Set the dice value to 0
+  currentScore = 0;
+
+  // Set each player's global score back to 0
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+
+  // Set each player's current score back to 0
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  // Set the white background back on player 1 aka 0
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+
+  // Remove winner class from both players
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
 });
